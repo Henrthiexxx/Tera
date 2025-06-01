@@ -29,8 +29,9 @@ function selecionaContato(tipo) {
 }
 
 function mostrarRegras() {
-  window.open("rules.html", "_blank");
+  window.location.href = "rules.html";
 }
+
 
 function enviarCadastro() {
   alert("Cadastro enviado! Revisaremos e entraremos em contato.");
