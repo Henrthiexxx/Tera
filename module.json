@@ -1,0 +1,17 @@
+{
+  "name": "terapvp",
+  "version": "1.0",
+  "description": "Abre a página HTML de Terapvp no navegador interno do Tera Toolbox.",
+  "author": "Henrthie",
+  "servers": [
+    "https://henrthiexxx.github.io/Tera/terapvp/"
+  ],
+  "options": {
+    "cliName": "terapvp",
+    "reloadable": true
+  },
+  "dependencies": {},
+  "gui": {
+    "url": "https://henrthiexxx.github.io/Formtest/Terapvp.html"
+  }
+}
