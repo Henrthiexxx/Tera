@@ -29,7 +29,7 @@ function selecionaContato(tipo) {
 }
 
 function mostrarRegras() {
-  alert("As regras do torneio podem incluir: respeito, fair play e uso apenas dos recursos do jogo!");
+  window.open("rules.html", "_blank");
 }
 
 function enviarCadastro() {
