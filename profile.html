@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Player Profile</title>
+  <link rel="stylesheet" href="https://henrthiexxx.github.io/Tera/style.css">
+  <style>
+    .box {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #444;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      box-shadow: 0 0 10px #00faff;
+      text-align: left;
+    }
+    .box h1 {
+      text-align: center;
+      color: #00faff;
+    }
+    .box p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id="profileBox">
+    <h1>Loading profile...</h1>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const nick = params.get("nick");
+    const key = params.get("key");
+
+    if (!nick || !key) {
+      location.href = "acesso-negado.html";
+    } else {
+      google.script.run.withSuccessHandler(data => {
+        if (!data || data.key !== key) {
+          location.href = "acesso-negado.html";
+        } else {
+          document.getElementById("profileBox").innerHTML = `
+            <h1>${nick}</h1>
+            <p><strong>Ranking:</strong> ${data.ranking}</p>
+            <p><strong>Class:</strong> ${data.class}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+          `;
+        }
+      }).validarNick(nick);
