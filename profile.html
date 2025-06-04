@@ -30,29 +30,28 @@
   </div>
 
   <script>
-const params = new URLSearchParams(location.search);
-const nick = params.get("nick");
+    const params = new URLSearchParams(location.search);
+    const nick = params.get("nick");
 
-if (!nick) {
-  location.href = "acesso-negado.html";
-} else {
-  fetch(`https://script.google.com/macros/s/SEU_SCRIPT_ID/exec?nick=${encodeURIComponent(nick)}`)
-    .then(res => res.json())
-    .then(data => {
-      if (!data || !data.ranking) {
-        location.href = "acesso-negado.html";
-      } else {
-        document.getElementById("profileBox").innerHTML = `
-          <h1>${nick}</h1>
-          <p><strong>Ranking:</strong> ${data.ranking}</p>
-          <p><strong>Class:</strong> ${data.class}</p>
-          <p><strong>Status:</strong> ${data.status}</p>
-        `;
-      }
-    })
-    .catch(() => location.href = "acesso-negado.html");
-}
-
+    if (!nick) {
+      location.href = "acesso-negado.html";
+    } else {
+      fetch(`https://script.google.com/macros/s/AKfycbz5-gGS1Q2tBJw0zhXu1lO3W6XrZ3rGL9a2r-IdXZYKj1_WJOY-MTJbCj9D5YJrvX58/exec?nick=${encodeURIComponent(nick)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (!data || !data.ranking) {
+            location.href = "acesso-negado.html";
+          } else {
+            document.getElementById("profileBox").innerHTML = `
+              <h1>${nick}</h1>
+              <p><strong>Ranking:</strong> ${data.ranking}</p>
+              <p><strong>Class:</strong> ${data.class}</p>
+              <p><strong>Status:</strong> ${data.status}</p>
+            `;
+          }
+        })
+        .catch(() => location.href = "acesso-negado.html");
+    }
   </script>
 </body>
 </html>
