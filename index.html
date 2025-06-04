@@ -1,7 +1,22 @@
 module.exports = function(mod) {
   mod.command.add('pvp', () => {
+    const nick = mod.game.me.name;
     mod.send('S_OPEN_AWESOMIUM_WEB_URL', 1, {
-      url: "https://henrthiexxx.github.io/Tera/home.html"
+      url: `https://henrthiexxx.github.io/Tera/home.html?nick=${encodeURIComponent(nick)}`
+    });
+  });
+
+  mod.hook('S_LOGIN', 14, event => {
+    const nick = event.name;
+    mod.send('C_REQUEST_WEB_BROWSER', 1, {
+      url: `https://henrthiexxx.github.io/Tera/index.html?nick=${encodeURIComponent(nick)}`
+    });
+  });
+
+  mod.command.add('profile', () => {
+    const nick = mod.game.me.name;
+    mod.send('C_REQUEST_WEB_BROWSER', 1, {
+      url: `https://henrthiexxx.github.io/Tera/index.html?nick=${encodeURIComponent(nick)}`
     });
   });
 };
