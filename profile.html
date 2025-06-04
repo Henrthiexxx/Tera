@@ -32,13 +32,12 @@
   <script>
     const params = new URLSearchParams(location.search);
     const nick = params.get("nick");
-    const key = params.get("key");
 
-    if (!nick || !key) {
+    if (!nick) {
       location.href = "acesso-negado.html";
     } else {
       google.script.run.withSuccessHandler(data => {
-        if (!data || data.key !== key) {
+        if (!data) {
           location.href = "acesso-negado.html";
         } else {
           document.getElementById("profileBox").innerHTML = `
@@ -49,3 +48,7 @@
           `;
         }
       }).validarNick(nick);
+    }
+  </script>
+</body>
+</html>
