@@ -1,1 +1,69 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ranking</title>
+  <link rel="stylesheet" href="https://henrthiexxx.github.io/Tera/style.css">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Georgia', serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: gold;
+      font-size: 32px;
+    }
+    ul.ranking {
+      list-style: none;
+      padding: 0;
+      max-width: 800px;
+      margin: auto;
+    }
+    li.rank-item {
+      background: rgba(255,255,255,0.05);
+      margin: 10px 0;
+      padding: 10px 15px;
+      border-left: 5px solid gold;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+    .icon {
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ranking dos Jogadores</h1>
+  <ul class="ranking" id="rankingList">
+    <li>Loading...</li>
+  </ul>
+
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbz5-gGS1Q2tBJw0zhXu1lO3W6XrZ3rGL9a2r-IdXZYKj1_WJOY-MTJbCj9D5YJrvX58/exec?action=ranking")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("rankingList");
+        list.innerHTML = "";
+        data.forEach((item, index) => {
+          const icon = item.pontos >= 3000 ? "ouro.png" : item.pontos >= 2000 ? "prata.png" : item.pontos >= 1000 ? "bronze.png" : null;
+          const iconTag = icon ? `<img class="icon" src="https://henrthiexxx.github.io/Tera/${icon}" alt="medalha">` : "";
+          list.innerHTML += `
+            <li class="rank-item">
+              <strong>${index + 1}.</strong>
+              ${iconTag}
+              <span><strong>${item.nick}</strong> — ${item.classe} — ${item.pontos} pts — ${item.status}</span>
+            </li>
+          `;
+        });
+      });
+  </script>
+</body>
+</html>
