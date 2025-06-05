@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Ranking</title>
   <link rel="stylesheet" href="https://henrthiexxx.github.io/Tera/style.css">
   <style>
@@ -47,22 +46,34 @@
   </ul>
 
   <script>
-    fetch("https://script.google.com/macros/s/AKfycbz5-gGS1Q2tBJw0zhXu1lO3W6XrZ3rGL9a2r-IdXZYKj1_WJOY-MTJbCj9D5YJrvX58/exec?action=ranking")
+    const API_KEY = "AIzaSyDIask_b2xaSjN2w8pFnoaEQiOKG00KYhk";
+    const SPREADSHEET_ID = "1Py-856v3cFoQmoWs9kIz7Uh-4ieTkld9PZnjaywFMfI";
+    const RANGE = "Ranking!A2:E";
+
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`)
       .then(res => res.json())
-      .then(data => {
+      .then(res => {
+        const data = res.values || [];
         const list = document.getElementById("rankingList");
         list.innerHTML = "";
-        data.forEach((item, index) => {
-          const icon = item.pontos >= 3000 ? "ouro.png" : item.pontos >= 2000 ? "prata.png" : item.pontos >= 1000 ? "bronze.png" : null;
+
+        data.forEach((linha, index) => {
+          const [nick, classe, pontosStr, status] = [linha[0], linha[1], linha[2], linha[4]];
+          const pontos = parseInt(pontosStr);
+          const icon = pontos >= 3000 ? "ouro.png" : pontos >= 2000 ? "prata.png" : pontos >= 1000 ? "bronze.png" : null;
           const iconTag = icon ? `<img class="icon" src="https://henrthiexxx.github.io/Tera/${icon}" alt="medalha">` : "";
+
           list.innerHTML += `
             <li class="rank-item">
               <strong>${index + 1}.</strong>
               ${iconTag}
-              <span><strong>${item.nick}</strong> — ${item.classe} — ${item.pontos} pts — ${item.status}</span>
+              <span><strong>${nick}</strong> — ${classe} — ${pontos} pts — ${status}</span>
             </li>
           `;
         });
+      })
+      .catch(err => {
+        document.getElementById("rankingList").innerHTML = "<li>Erro ao carregar ranking.</li>";
       });
   </script>
 </body>
