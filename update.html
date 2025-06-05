@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Updates</title>
+  <link rel="stylesheet" href="https://henrthiexxx.github.io/Tera/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #00faff;
+      font-size: 32px;
+    }
+    ul.updates {
+      list-style: none;
+      padding: 0;
+      max-width: 800px;
+      margin: auto;
+    }
+    li.update-item {
+      background: rgba(255,255,255,0.05);
+      margin: 10px 0;
+      padding: 12px 20px;
+      border-left: 4px solid #00faff;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 16px;
+    }
+    .patch {
+      color: #ffcc00;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Atualizações Recentes</h1>
+  <ul class="updates" id="updatesList">
+    <li>Carregando...</li>
+  </ul>
+
+  <script>
+    const API_KEY = "AIzaSyDIask_b2xaSjN2w8pFnoaEQiOKG00KYhk";
+    const SPREADSHEET_ID = "1Py-856v3cFoQmoWs9kIz7Uh-4ieTkld9PZnjaywFMfI";
+    const RANGE = "Updates!A2:D";
+
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`)
+      .then(res => res.json())
+      .then(res => {
+        const data = res.values || [];
+        const list = document.getElementById("updatesList");
+        list.innerHTML = "";
+
+        data.forEach(linha => {
+          const [titulo, dataPub, descricao, versao] = linha;
+          list.innerHTML += `
+            <li class="update-item">
+              <span class="patch">Versão ${versao}</span>
+              <strong>${titulo}</strong>
+              <em>${dataPub}</em>
+              <p>${descricao}</p>
+            </li>
+          `;
+        });
+      })
+      .catch(() => {
+        document.getElementById("updatesList").innerHTML = "<li>Erro ao carregar atualizações.</li>";
+      });
+  </script>
+</body>
+</html>
